@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>إشارة المشاة الذكية | Smart Pedestrian Signal</title>
+<meta name="description" content="Smart Pedestrian Signal – إشارة المشاة الذكية: اختراع مبني على Arduino لتنظيم عبور المشاة، مع مجسم ثلاثي الأبعاد ومحاكاة تفاعلية للنسختين V1 وV2.">
+<meta name="theme-color" content="#0a0d13">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0d13'/%3E%3Ccircle cx='16' cy='10' r='4' fill='%23ff4b4b'/%3E%3Ccircle cx='16' cy='22' r='4' fill='%2335e08a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip"></a>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#hero" aria-label="Smart Pedestrian Signal">
+      <svg class="logo" viewBox="0 0 36 36" width="36" height="36" aria-hidden="true">
+        <rect x="1" y="1" width="34" height="34" rx="10" fill="#0f141d" stroke="#2a3447" stroke-width="1.5"/>
+        <circle cx="18" cy="11.5" r="4.2" fill="#ff4b4b" opacity=".35"/>
+        <circle cx="18" cy="24.5" r="4.2" fill="#35e08a"/>
+        <circle cx="18" cy="24.5" r="7" fill="none" stroke="#35e08a" stroke-opacity=".35"/>
+      </svg>
+      <span class="brand-name" data-i18n="brand"></span>
+    </a>
+    <nav id="nav" aria-label="Main">
+      <ul id="navList"></ul>
+    </nav>
+    <div class="topbar-act">
+      <button class="btn-lang" id="langBtn" type="button"><span data-i18n="lang_btn"></span></button>
+      <button class="btn-menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav" data-i18n-aria="menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1><span data-i18n="hero_title"></span><small>Smart Pedestrian Signal</small></h1>
+      <p class="lead" data-i18n="hero_lead"></p>
+      <div class="cta">
+        <a class="btn btn-go" href="#lab"><span data-i18n="hero_cta1"></span></a>
+        <a class="btn btn-ghost" href="#sim"><span data-i18n="hero_cta2"></span></a>
+      </div>
+      <ul class="chips">
+        <li data-i18n="chip_1"></li><li data-i18n="chip_2"></li><li data-i18n="chip_3"></li><li data-i18n="chip_4"></li>
+      </ul>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="signals">
+        <div class="unit">
+          <div class="sig-head sig-car">
+            <i class="lamp r cyc-cr"></i><i class="lamp y cyc-cy"></i><i class="lamp g cyc-cg"></i>
+          </div>
+          <span class="cap" data-i18n="hero_car"></span>
+        </div>
+        <div class="unit">
+          <div class="sig-head sig-ped">
+            <i class="lamp r cyc-pr"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.3" fill="currentColor"/><path d="M12 8v7M7.5 11h9M12 15v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></i>
+            <i class="lamp g cyc-pg"><svg viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="2.3" fill="currentColor"/><path d="M13 8l-1 7M13 9.5l-4 3M13 9.5l3.5 3M12 15l-3.5 6M12 15l4 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></i>
+          </div>
+          <span class="cap" data-i18n="hero_ped"></span>
+        </div>
+      </div>
+      <div class="crosswalk"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="about_h"></h2><p data-i18n="about_lead"></p></header>
+    <div class="about-grid reveal">
+      <article class="problem">
+        <h3 data-i18n="problem_h"></h3>
+        <p data-i18n="problem_p"></p>
+      </article>
+      <article class="goals">
+        <h3 data-i18n="goals_h"></h3>
+        <ul id="goalsList"></ul>
+      </article>
+    </div>
+    <h3 class="sub reveal" data-i18n="feat_h"></h3>
+    <ul class="feat-grid reveal" id="featList"></ul>
+  </div>
+</section>
+
+<!-- VERSIONS -->
+<section class="sec" id="versions">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="versions_h"></h2><p data-i18n="versions_lead"></p></header>
+    <div class="ver-grid reveal">
+      <article class="ver ver-1">
+        <h3 data-i18n="v1_name"></h3>
+        <p data-i18n="v1_desc"></p>
+        <h4 data-i18n="v1_comp_h"></h4>
+        <ul class="part-list" id="v1List"></ul>
+      </article>
+      <article class="ver ver-2">
+        <h3 data-i18n="v2_name"></h3>
+        <p data-i18n="v2_desc"></p>
+        <p class="keeps" data-i18n="v2_keeps"></p>
+        <h4 data-i18n="v2_comp_h"></h4>
+        <ul class="part-list" id="v2List"></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3D LAB -->
+<section class="sec lab" id="lab">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="lab_h"></h2><p data-i18n="lab_lead"></p></header>
+    <div class="lab-grid">
+      <div class="stage" id="stage">
+        <canvas id="c3d" tabindex="0" aria-label="3D model"></canvas>
+        <div class="chip-layer" id="chipLayer"></div>
+        <div class="stage-ver" id="labVer" role="group">
+          <button type="button" data-ver="v1" aria-pressed="false">V1</button>
+          <button type="button" data-ver="v2" aria-pressed="true">V2</button>
+        </div>
+        <div class="stage-hint" data-i18n="lab_hint"></div>
+        <div class="stage-tools">
+          <button type="button" id="toolReset"><span data-i18n="tool_reset"></span></button>
+          <button type="button" id="toolRotate" aria-pressed="true"><span data-i18n="tool_rotate"></span></button>
+          <button type="button" id="toolLabels" aria-pressed="false"><span data-i18n="tool_labels"></span></button>
+          <button type="button" id="toolNew" aria-pressed="false"><span data-i18n="tool_new"></span></button>
+          <button type="button" id="zoomOut" class="sq" data-i18n-aria="tool_zout">−</button>
+          <button type="button" id="zoomIn" class="sq" data-i18n-aria="tool_zin">+</button>
+        </div>
+        <div class="stage-msg" id="labLoading"><span data-i18n="lab_loading"></span></div>
+        <div class="stage-msg is-fail" id="labFail" hidden><span data-i18n="lab_fail"></span></div>
+      </div>
+      <aside class="side">
+        <div class="info" id="partInfo" aria-live="polite"></div>
+        <div class="vis">
+          <h3 data-i18n="vis_h"></h3>
+          <ul id="visList"></ul>
+        </div>
+        <p class="note" data-i18n="lab_note"></p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- SIMULATION -->
+<section class="sec" id="sim">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="sim_h"></h2><p data-i18n="sim_lead"></p></header>
+    <div class="sim-grid">
+      <div class="sim-left">
+        <div class="scene" id="scene" data-ver="v1" data-state="off">
+          <div class="walk walk-top"></div>
+          <div class="road"></div>
+          <div class="zebra"></div>
+          <div class="stopline"></div>
+          <div class="walk walk-bot"></div>
+
+          <div class="pole car-pole">
+            <div class="sig-head">
+              <i class="lamp r" id="lCarR"></i><i class="lamp y" id="lCarY"></i><i class="lamp g" id="lCarG"></i>
+            </div>
+            <span class="lbl" data-i18n="sim_car"></span>
+          </div>
+
+          <div class="pole ped-pole">
+            <div class="sig-head">
+              <i class="lamp r" id="lPedR"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2.3" fill="currentColor"/><path d="M12 8v7M7.5 11h9M12 15v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></i>
+              <i class="lamp g" id="lPedG"><svg viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="2.3" fill="currentColor"/><path d="M13 8l-1 7M13 9.5l-4 3M13 9.5l3.5 3M12 15l-3.5 6M12 15l4 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></i>
+            </div>
+            <span class="lbl" data-i18n="sim_ped"></span>
+          </div>
+          <div class="btn-wrap">
+            <button class="pbtn" id="sceneBtn" type="button" data-i18n-aria="sim_req" disabled></button>
+            <span class="lbl" data-i18n="sim_btn"></span>
+          </div>
+
+          <div class="car" id="car"></div>
+          <div class="walker" id="pedFig"><i></i><b></b></div>
+
+          <div class="sensor v2only" id="sensor">
+            <span class="box"><i></i><i></i></span>
+            <span class="wave"></span>
+            <span class="rd" id="sensRead"></span>
+          </div>
+          <div class="warn v2only">
+            <i class="lamp r" id="lWarn"></i>
+            <span class="lbl" data-i18n="sim_warn"></span>
+          </div>
+          <div class="buzz v2only" id="buzz">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="w1" d="M16 8.5a5 5 0 010 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path class="w2" d="M18.5 6a8.5 8.5 0 010 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            <span class="lbl" data-i18n="sim_buz"></span>
+          </div>
+        </div>
+        <div class="status" id="simStatus" role="status" aria-live="polite"></div>
+        <p class="note" data-i18n="sim_note"></p>
+      </div>
+
+      <div class="sim-ctrl">
+        <div class="ctl">
+          <span class="ctl-l" data-i18n="sim_ver"></span>
+          <div class="seg" id="simVer" role="group">
+            <button type="button" data-ver="v1" aria-pressed="true">V1</button>
+            <button type="button" data-ver="v2" aria-pressed="false">V2</button>
+          </div>
+        </div>
+        <div class="ctl ctl-act">
+          <button class="btn btn-power" id="simPower" type="button" aria-pressed="false"></button>
+          <button class="btn btn-req" id="simReq" type="button" disabled><span data-i18n="sim_req"></span></button>
+        </div>
+        <div class="ctl rng">
+          <label for="rngYellow"><span data-i18n="sim_yellow_t"></span><output id="outYellow"></output></label>
+          <input type="range" id="rngYellow" min="1" max="5" step="1" value="2">
+        </div>
+        <div class="ctl rng">
+          <label for="rngCross"><span data-i18n="sim_cross_t"></span><output id="outCross"></output></label>
+          <input type="range" id="rngCross" min="3" max="15" step="1" value="7">
+        </div>
+        <div id="v2Ctrl" hidden>
+          <div class="ctl rng">
+            <label for="rngDist"><span data-i18n="sim_dist"></span><output id="outDist"></output></label>
+            <input type="range" id="rngDist" min="2" max="400" step="2" value="250">
+          </div>
+          <div class="ctl rng">
+            <label for="rngThresh"><span data-i18n="sim_thresh"></span><output id="outThresh"></output></label>
+            <input type="range" id="rngThresh" min="20" max="200" step="10" value="100">
+          </div>
+          <label class="check"><input type="checkbox" id="chkSound" checked><span data-i18n="sim_sound"></span></label>
+          <p class="note" data-i18n="sim_v2_hint"></p>
+        </div>
+        <div class="log">
+          <h3 data-i18n="sim_log"></h3>
+          <ul id="simLog"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="sec" id="compare">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="cmp_h"></h2><p data-i18n="cmp_lead"></p></header>
+    <div class="table-wrap reveal">
+      <table class="cmp">
+        <thead><tr><th scope="col" data-i18n="cmp_feat"></th><th scope="col" class="c1">V1</th><th scope="col" class="c2">V2</th></tr></thead>
+        <tbody id="cmpBody"></tbody>
+      </table>
+    </div>
+    <p class="note" data-i18n="cmp_note"></p>
+  </div>
+</section>
+
+<!-- PARTS -->
+<section class="sec" id="parts">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="parts_h"></h2><p data-i18n="parts_lead"></p></header>
+    <div class="parts-grid reveal" id="partsGrid"></div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="how_h"></h2><p data-i18n="how_lead"></p></header>
+    <div class="flow reveal">
+      <div class="node"><b data-i18n="flow_in"></b><span data-i18n="flow_in_d"></span></div>
+      <i class="arrow" aria-hidden="true"></i>
+      <div class="node core"><b data-i18n="flow_cpu"></b><span data-i18n="flow_cpu_d"></span></div>
+      <i class="arrow" aria-hidden="true"></i>
+      <div class="node"><b data-i18n="flow_out"></b><span data-i18n="flow_out_d"></span></div>
+    </div>
+    <div class="how-grid reveal">
+      <article>
+        <h3 data-i18n="how_v1_h"></h3>
+        <ol class="steps" id="howV1"></ol>
+      </article>
+      <article>
+        <h3 data-i18n="how_v2_h"></h3>
+        <ul class="plus" id="howV2"></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="sec" id="timeline">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="tl_h"></h2><p data-i18n="tl_lead"></p></header>
+    <ol class="tl reveal" id="tlList"></ol>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="sec" id="results">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="res_h"></h2><p data-i18n="res_lead"></p></header>
+    <div class="res reveal" id="resList"></div>
+  </div>
+</section>
+
+<!-- FUTURE -->
+<section class="sec" id="future">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="fut_h"></h2><p data-i18n="fut_lead"></p></header>
+    <ul class="fut-grid reveal" id="futList"></ul>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec" id="gallery">
+  <div class="wrap">
+    <header class="sec-head reveal"><h2 data-i18n="gal_h"></h2><p data-i18n="gal_lead"></p></header>
+    <div class="gal reveal" id="galGrid"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="wrap narrow">
+    <header class="sec-head reveal"><h2 data-i18n="faq_h"></h2></header>
+    <div class="faq reveal" id="faqList"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span class="foot-brand" data-i18n="brand"></span>
+    <span data-i18n="foot_note"></span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true">
+  <figure>
+    <img id="lbImg" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+  <button type="button" id="lbClose" data-i18n-aria="gal_close">×</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
